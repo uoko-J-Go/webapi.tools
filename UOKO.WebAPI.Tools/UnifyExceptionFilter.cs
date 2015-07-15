@@ -13,19 +13,17 @@ namespace UOKO.WebAPI.Tools
     {
         public override void OnException(HttpActionExecutedContext actionExecutedContext)
         {
-            //actionExecutedContext.
+            var exception = actionExecutedContext.Exception;
 
-            //var exception = actionExecutedContext.Exception;
-
-            //var request = actionExecutedContext.Request;
-            //var httpError = new HttpError(exception, request.ShouldIncludeErrorDetail())
-            //                {
-            //                    Message = "请求出错,请查看异常信息"
-            //                };
+            var request = actionExecutedContext.Request;
+            var httpError = new HttpError(exception, request.ShouldIncludeErrorDetail())
+                            {
+                                Message = "请求出错,请查看异常信息"
+                            };
 
 
-            //var response = request.CreateErrorResponse(HttpStatusCode.BadRequest, httpError);
-            //actionExecutedContext.Response = response;
+            var response = request.CreateErrorResponse(HttpStatusCode.BadRequest, httpError);
+            actionExecutedContext.Response = response;
         }
     }
 }
