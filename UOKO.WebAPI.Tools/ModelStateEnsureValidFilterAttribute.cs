@@ -14,8 +14,16 @@ namespace UOKO.WebAPI.Tools
     /// </summary>
     public class ModelStateEnsureValidFilterAttribute : ActionFilterAttribute
     {
+        public bool Disable { get; set; }
+
+
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
+            if (Disable)
+            {
+                return;
+            }
+
             if (actionContext == null)
             {
                 return;
