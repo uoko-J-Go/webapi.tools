@@ -57,6 +57,7 @@
     <Compile Include="ModelStateEnsureValidFilterAttribute.cs" />
     <Compile Include="OverrideModelStateEnsureValidFilterAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RPCResponseMsgHandler.cs" />
     <Compile Include="UnifyExceptionFilter.cs" />
   </ItemGroup>
   <ItemGroup>
