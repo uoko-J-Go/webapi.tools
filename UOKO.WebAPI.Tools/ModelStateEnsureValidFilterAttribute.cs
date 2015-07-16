@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Controllers;
@@ -14,16 +15,8 @@ namespace UOKO.WebAPI.Tools
     /// </summary>
     public class ModelStateEnsureValidFilterAttribute : ActionFilterAttribute
     {
-        public bool Disable { get; set; }
-
-
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
-            if (Disable)
-            {
-                return;
-            }
-
             if (actionContext == null)
             {
                 return;
@@ -32,6 +25,30 @@ namespace UOKO.WebAPI.Tools
             if (request == null)
             {
                 return;
+            }
+
+            if (actionContext.ActionDescriptor!=null)
+            {
+                var hasExcludeModelStateEnsureValideAttr =
+                    actionContext.ActionDescriptor.GetCustomAttributes<ExcludeModelStateEnsureValidFilterAttribute>()
+                                 .Any();
+                if (hasExcludeModelStateEnsureValideAttr)
+                {
+                    return;
+                }
+            }
+
+            if (actionContext.ControllerContext != null
+                && actionContext.ControllerContext.ControllerDescriptor != null)
+            {
+                var hasExcludeModelStateEnsureValideAttr =
+                    actionContext.ControllerContext.ControllerDescriptor
+                                 .GetCustomAttributes<ExcludeModelStateEnsureValidFilterAttribute>()
+                                 .Any();
+                if (hasExcludeModelStateEnsureValideAttr)
+                {
+                    return;
+                }
             }
 
             var modelState = actionContext.ModelState;
