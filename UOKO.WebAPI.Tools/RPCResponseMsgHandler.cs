@@ -17,9 +17,7 @@ namespace UOKO.WebAPI.Tools
             var response = await base.SendAsync(request, cancellationToken);
 
             var needRpcStyleResponse = request.Headers.Any(item => item.Key == "uoko-rpc-response");
-            // if (!needRpcStyleResponse)
-            // 暂时放开为了不影响开发, 最后直接替换
-            if (needRpcStyleResponse)
+            if (!needRpcStyleResponse)
             {
                 return response;
             }
