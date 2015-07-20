@@ -58,17 +58,7 @@ namespace UOKO.WebAPI.Tools
                 return;
             }
 
-            // 返回统一错误信息, 用 ErrorInfo 代替 ModelStateKey(ModelState) ,因为除了 ModelState 以外
-            // 还可能是用户自定义的一些 ErrorInfo ,只不过我们都统一使用 ModelState 的格式进行返回.
-            var httpError = new HttpError(modelState, request.ShouldIncludeErrorDetail());
-            object modelStateInfo;
-            var hasModelStateInfo = httpError.TryGetValue(HttpErrorKeys.ModelStateKey, out modelStateInfo);
-            if (hasModelStateInfo)
-            {
-                httpError.Remove(HttpErrorKeys.ModelStateKey);
-                httpError["ErrorInfo"] = modelStateInfo;
-            }
-            actionContext.Response = request.CreateErrorResponse(HttpStatusCode.BadRequest, httpError);
+            actionContext.Response = request.CreateErrorResponse(HttpStatusCode.BadRequest, modelState);
         }
     }
 }
