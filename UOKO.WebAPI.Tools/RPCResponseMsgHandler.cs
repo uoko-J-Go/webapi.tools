@@ -22,7 +22,12 @@ namespace UOKO.WebAPI.Tools
                 return response;
             }
 
-            var originData = await response.Content.ReadAsAsync<object>(cancellationToken);
+            object originData = null;
+            if (response.Content != null)
+            {
+                originData = await response.Content.ReadAsAsync<object>(cancellationToken);
+            }
+
             var rpcResult = new RPCStyleResult { data = originData };
             // 转化为 RPC 统一的风格
             if (!response.IsSuccessStatusCode)
