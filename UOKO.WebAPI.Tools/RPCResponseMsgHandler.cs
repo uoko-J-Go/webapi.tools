@@ -32,7 +32,7 @@ namespace UOKO.WebAPI.Tools
             // 转化为 RPC 统一的风格
             if (!response.IsSuccessStatusCode)
             {
-                rpcResult.code = response.StatusCode.ToString();
+                rpcResult.code = ((int)response.StatusCode).ToString();
                 rpcResult.message = "请求失败,详情见 data 信息";
             }
 
