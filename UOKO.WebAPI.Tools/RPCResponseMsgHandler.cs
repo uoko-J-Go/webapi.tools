@@ -28,16 +28,16 @@ namespace UOKO.WebAPI.Tools
                 originData = await response.Content.ReadAsAsync<object>(cancellationToken);
             }
 
-            var rpcResult = new RPCStyleResult { data = originData };
+            var rpcResult = new RPCStyleResult {data = originData};
             // 转化为 RPC 统一的风格
             if (!response.IsSuccessStatusCode)
             {
-                response.StatusCode = HttpStatusCode.OK;
-                rpcResult.code = "550";
+                rpcResult.code = response.StatusCode.ToString();
                 rpcResult.message = "请求失败,详情见 data 信息";
             }
 
             response.Content = request.CreateResponse(HttpStatusCode.OK, rpcResult).Content;
+            response.StatusCode = HttpStatusCode.OK;
             return response;
         }
 
