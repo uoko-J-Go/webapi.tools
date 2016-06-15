@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
@@ -17,11 +16,7 @@ namespace UOKO.WebAPI.Tools
     {
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
-            if (actionContext == null)
-            {
-                return;
-            }
-            var request = actionContext.Request;
+            var request = actionContext?.Request;
             if (request == null)
             {
                 return;
