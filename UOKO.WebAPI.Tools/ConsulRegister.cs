@@ -3,7 +3,7 @@ using Consul;
 
 namespace UOKO.WebAPI.Tools
 {
-    public class ConsulRegister
+    public static class ConsulRegister
     {
         public class ServiceInfo
         {
@@ -15,12 +15,12 @@ namespace UOKO.WebAPI.Tools
         /// 設置 consul httpaddr ，默認 http://127.0.0.1:8500
         /// </summary>
         /// <param name="httpAddr">address:port</param>
-        public void SetConsulHttpAddr(string httpAddr)
+        public static void SetConsulHttpAddr(string httpAddr)
         {
             Environment.SetEnvironmentVariable("CONSUL_HTTP_ADDR", httpAddr);
         }
 
-        public void RegisterService(ServiceInfo service)
+        public static void RegisterService(ServiceInfo service)
         {
             var serviceReg = new AgentServiceRegistration
                              {
@@ -42,7 +42,7 @@ namespace UOKO.WebAPI.Tools
             RegisterService(serviceReg);
         }
 
-        public void RegisterService(AgentServiceRegistration serviceReg)
+        public static void RegisterService(AgentServiceRegistration serviceReg)
         {
             using (var consulClient = new ConsulClient())
             {
